@@ -4,13 +4,9 @@ import Pagination from '../components/pagination'
 import RoomsPage from './roomsPage'
 import Loader from '../components/common/form/loader'
 import {useRooms} from '../hooks/useRooms'
-import {useImage} from '../hooks/useImage'
 
 const RoomsListPage = () => {
   const {rooms} = useRooms()
-  //   const {image} = useImage()
-
-  //   console.log(image)
 
   const count = rooms.length
   const pageSize = 6

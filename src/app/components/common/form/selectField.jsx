@@ -14,9 +14,9 @@ const SelectField = ({
     onChange({name: target.name, value: target.value})
   }
   const getInputClasses = () => {
-    return 'form-select' + (error ? ' is-invalid' : '')
+    return 'form-select' + (error && booleanValue ? ' is-invalid' : '')
   }
-
+  const booleanValue = Boolean(value)
   const optionsArray =
     !Array.isArray(options) && typeof options === 'object'
       ? Object.values(options)

@@ -2,7 +2,7 @@ import React from 'react'
 import AddRoomsPage from '../pages/addRoomPage'
 import {useRooms} from '../hooks/useRooms'
 
-const AdminPage = () => {
+const Admin = () => {
   const {addRoom} = useRooms()
 
   const handeleSubmit = (data) => {
@@ -16,4 +16,4 @@ const AdminPage = () => {
   )
 }
 
-export default AdminPage
+export default Admin

@@ -1,6 +1,5 @@
 import httpService from './http.service'
-
-const imageEndpoint = 'image/'
+const imageEndpoint = 'titleImage/'
 
 const imageService = {
   get: async (id) => {

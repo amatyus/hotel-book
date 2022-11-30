@@ -1,20 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import Loader from '../components/common/form/loader'
+import Loader from './common/form/loader'
 import {useHistory} from 'react-router-dom'
 import Button from './common/button'
 import Carousel from 'react-multi-carousel'
 import '../../css/roomPage.css'
 import 'react-multi-carousel/lib/styles.css'
 import BackButton from './common/backButton'
-import roomService from '../services/room.service'
+import {useRooms} from '../hooks/useRooms'
+import {useCategory} from '../hooks/useCategory'
 
 const RoomPage = ({roomId}) => {
-  const [room, setRoom] = useState()
-
-  useEffect(() => {
-    roomService.fetchAll().then((data) => setRoom(data))
-  }, [])
+  const {getRoom} = useRooms()
+  const room = getRoom(roomId)
+  const history = useHistory()
+  const {isLoading, getCategory} = useCategory()
+  const category = getCategory(room.category)
 
   const responsive = {
     desktop: {
@@ -26,8 +27,11 @@ const RoomPage = ({roomId}) => {
       items: 2
     }
   }
+  const handleEdit = () => {
+    history.push(`/rooms/edit/${roomId}`)
+  }
 
-  if (room) {
+  if (room && !isLoading) {
     return (
       <>
         <div className="row p-5">
@@ -36,8 +40,8 @@ const RoomPage = ({roomId}) => {
           </div>
 
           <div className="card p-5 ">
-            {/* <Carousel responsive={responsive}> */}
-            {/* {room &&
+            <Carousel responsive={responsive}>
+              {room &&
                 room.image.map((img) => (
                   <div key={room}>
                     <img
@@ -47,16 +51,23 @@ const RoomPage = ({roomId}) => {
                       className="w-50"
                     />
                   </div>
-                ))} */}
-            {/* </Carousel> */}
+                ))}
+            </Carousel>
 
             <div className="card-body ">
-              {/* <h5 className="card-title">{room.title}</h5>
+              <h5 className="card-title">{room.title}</h5>
               <p className="card-text">{room.description}</p>
               <p className="card-text-price">Price: {room.price}$</p>
-              <p className="card-text-category">Category: {room.category}</p>
-              <p className="card-text-rating">Rating: {room.rating.rate}</p> */}
+              <p className="card-text-category">Category: {category.name} </p>
+              <p className="card-text-rating">Rating: {room.rating}</p>
               <Button type="button" text="Забронировать" />
+              <Button
+                type="button"
+                className=" mx-4"
+                text="Редактировать"
+                onClick={handleEdit}
+              />
+              <Button type="button" className=" " text="Удалить номер" />
             </div>
           </div>
         </div>

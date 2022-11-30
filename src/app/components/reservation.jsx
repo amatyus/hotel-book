@@ -1,28 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import api from '../api'
 
 import RoomsCard from './ui/roomsCard'
 import Loader from './common/form/loader'
+import {useImage} from '../hooks/useImage'
 
 const Reservation = () => {
   const [rooms, setRooms] = useState([])
+  const {images} = useImage()
+  console.log(images)
 
-  useEffect(() => {
-    api.roomInfo.fetchRoomInfo().then((data) => {
-      setRooms(data)
-    })
-  }, [])
-  if (rooms.length) {
+  if (images.length) {
     return (
       <>
         <div className="container  ">
           <div className="row">
-            {rooms &&
-              rooms.map((room) => (
-                <React.Fragment key={room.id}>
+            {images &&
+              images.map((image) => (
+                <React.Fragment key={image.id}>
                   <div className="col">
-                    <RoomsCard {...room} />{' '}
+                    <RoomsCard {...image} />
                   </div>
                 </React.Fragment>
               ))}

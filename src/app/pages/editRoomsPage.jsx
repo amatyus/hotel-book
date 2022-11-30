@@ -7,15 +7,19 @@ import Button from '../components/common/button'
 import '../../css/editRoomsPage.css'
 import BackButton from '../components/common/backButton'
 import FileField from '../components/common/form/fileField'
-import roomService from '../services/room.service'
 import {useRooms} from '../hooks/useRooms'
-import Category from '../components/ui/category'
+import {useCategory} from '../hooks/useCategory'
 
 const EditRoomsPage = ({edit}) => {
   const {getRoom, updateRoom} = useRooms()
+  const {category} = useCategory()
   const rooms = getRoom(edit)
-  console.log(rooms)
   const [data, setData] = useState(rooms)
+
+  const categoryList = category.map((с) => ({
+    label: с.name,
+    value: с.id
+  }))
   //   const [errors, setErrors] = useState({})
 
   const handeleSubmit = (e) => {
@@ -64,11 +68,11 @@ const EditRoomsPage = ({edit}) => {
             <SelectField
               label="Category"
               name="category"
-              // options={colors}
+              defaultOption="Выберите категорию..."
+              options={categoryList}
               onChange={handleChange}
               value={data.category || ''}
             />
-            <Category id={rooms.category} />
             <Button type="submit" text="Сохранить изменения"></Button>
           </form>
         </div>

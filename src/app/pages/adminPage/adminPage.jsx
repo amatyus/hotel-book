@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const UserPage = () => {
+const AdminPage = () => {
   return (
     <div className="container">
       <div className="row gutters-sm">
@@ -11,8 +11,8 @@ const UserPage = () => {
   )
 }
 
-UserPage.propTypes = {
+AdminPage.propTypes = {
   userId: PropTypes.string.isRequired
 }
 
-export default UserPage
+export default AdminPage

@@ -14,8 +14,8 @@ const roomService = {
     const {data} = await httpService.get(roomEndPoint)
     return data
   },
-  create: async (content) => {
-    const {data} = await httpService.post(roomService, content)
+  create: async (payload) => {
+    const {data} = await httpService.put(roomService + payload.id, payload)
     return data
   }
 }

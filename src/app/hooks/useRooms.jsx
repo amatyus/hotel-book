@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-// import qualityService from "../services/quality.service";
 import roomService from '../services/room.service'
 import Loader from '../components/common/form/loader'
 
@@ -40,7 +39,6 @@ export const RoomsProvider = ({children}) => {
   const updateRoom = async (id, data) => {
     try {
       const {content} = await roomService.update(id, data)
-      console.log(content)
       setRooms((prevState) =>
         prevState.map((item) => {
           if (item.id === content.id) {
@@ -64,6 +62,14 @@ export const RoomsProvider = ({children}) => {
       setError(error)
     }
   }
+  async function createRoom(data) {
+    try {
+      const {content} = roomService.create(data)
+      setRooms(content)
+    } catch (error) {
+      errorCatcher(error)
+    }
+  }
 
   return (
     <RoomsContext.Provider
@@ -71,7 +77,8 @@ export const RoomsProvider = ({children}) => {
         rooms,
         getRoom,
         updateRoom,
-        addRoom
+        addRoom,
+        createRoom
       }}
     >
       {!isLoading ? children : <Loader />}

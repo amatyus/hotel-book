@@ -20,7 +20,7 @@ const Button = ({text, type, disabled, onClick, className}) => {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onClick: PropTypes.func,
   className: PropTypes.string
 }
