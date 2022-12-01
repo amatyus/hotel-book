@@ -13,11 +13,11 @@ export const CategoryProvider = ({children}) => {
   const [category, setCategory] = useState([])
   const [error, setError] = useState(null)
 
-  //   useEffect(() => {
-  //     if (error !== null) {
-  //       setError(null)
-  //     }
-  //   }, [error])
+  useEffect(() => {
+    if (error !== null) {
+      setError(null)
+    }
+  }, [error])
 
   useEffect(() => {
     getCategoryList()

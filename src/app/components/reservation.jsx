@@ -1,14 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 
 import RoomsCard from './ui/roomsCard'
 import Loader from './common/form/loader'
 import {useImage} from '../hooks/useImage'
 
 const Reservation = () => {
-  const [rooms, setRooms] = useState([])
   const {images} = useImage()
-  console.log(images)
 
   if (images.length) {
     return (

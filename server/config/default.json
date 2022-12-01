@@ -1,0 +1,4 @@
+{
+  "port": 8080,
+  "mongoUri": "mongodb+srv://Anastasiya:jfd-dev-1234@cluster0.ngtjorw.mongodb.net/hotel?retryWrites=true&w=majority"
+}

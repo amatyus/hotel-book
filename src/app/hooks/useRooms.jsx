@@ -71,6 +71,12 @@ export const RoomsProvider = ({children}) => {
     }
   }
 
+  useEffect(() => {
+    if (error !== null) {
+      setError(null)
+    }
+  }, [error])
+
   return (
     <RoomsContext.Provider
       value={{

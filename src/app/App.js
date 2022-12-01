@@ -10,8 +10,8 @@ import {RoomsProvider} from './hooks/useRooms'
 import {CategoryProvider} from './hooks/useCategory'
 import AuthProvider from './hooks/useAuth'
 import {ImageProvider} from './hooks/useImage'
-import ProtectedRoute from './components/ui/protectedRoute'
 import LogOut from './layouts/logOut'
+import ProtectedRoute from './components/common/protectedRoute'
 
 function App() {
   return (

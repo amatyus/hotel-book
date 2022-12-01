@@ -10,7 +10,7 @@ const UserPage = ({userId}) => {
   if (user) {
     return (
       <>
-        <div className="container">
+        <div className="container mt-5">
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
               <UserCard user={user} />

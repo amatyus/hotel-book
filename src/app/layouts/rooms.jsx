@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import RoomsListPage from '../pages/roomsListPage'
 import {useParams} from 'react-router-dom'
 import RoomPage from '../components/roomPage'
