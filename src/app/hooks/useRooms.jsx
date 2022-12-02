@@ -36,7 +36,7 @@ export const RoomsProvider = ({children}) => {
     return rooms.find((r) => r.id === id)
   }
 
-  const updateRoom = async (id, data) => {
+  const updateRoomData = async (id, data) => {
     try {
       const {content} = await roomService.update(id, data)
       setRooms((prevState) =>
@@ -82,9 +82,10 @@ export const RoomsProvider = ({children}) => {
       value={{
         rooms,
         getRoom,
-        updateRoom,
+        updateRoomData,
         addRoom,
-        createRoom
+        createRoom,
+        isLoading
       }}
     >
       {!isLoading ? children : <Loader />}

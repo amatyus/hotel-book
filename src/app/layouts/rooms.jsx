@@ -7,12 +7,14 @@ import EditRoomsPage from '../pages/editRoomsPage'
 const Rooms = () => {
   const params = useParams()
   const {roomId, edit} = params
+  console.log('roomId', roomId)
+  console.log('edit', edit)
 
   return (
     <>
       {roomId ? (
         edit ? (
-          <EditRoomsPage edit={edit} />
+          <EditRoomsPage roomId={roomId} />
         ) : (
           <RoomPage roomId={roomId} />
         )

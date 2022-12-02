@@ -9,13 +9,15 @@ import 'react-multi-carousel/lib/styles.css'
 import BackButton from './common/backButton'
 import {useRooms} from '../hooks/useRooms'
 import {useCategory} from '../hooks/useCategory'
+import {useAuth} from '../hooks/useAuth'
 
 const RoomPage = ({roomId}) => {
   const {getRoom} = useRooms()
   const room = getRoom(roomId)
   const history = useHistory()
-  const {isLoading, getCategory} = useCategory()
+  const {isLoading: categoryLoading, getCategory} = useCategory()
   const category = getCategory(room.category)
+  const {currentUser, isLoading: userLoading} = useAuth()
 
   const responsive = {
     desktop: {
@@ -28,10 +30,10 @@ const RoomPage = ({roomId}) => {
     }
   }
   const handleEdit = () => {
-    history.push(`/rooms/edit/${roomId}`)
+    history.push(`/rooms/${roomId}/edit`)
   }
 
-  if (room && !isLoading) {
+  if (room && !categoryLoading) {
     return (
       <>
         <div className="row p-5">
@@ -61,13 +63,17 @@ const RoomPage = ({roomId}) => {
               <p className="card-text-category">Category: {category.name} </p>
               <p className="card-text-rating">Rating: {room.rating}</p>
               <Button type="button" text="Забронировать" />
-              <Button
-                type="button"
-                className=" mx-4"
-                text="Редактировать"
-                onClick={handleEdit}
-              />
-              <Button type="button" className=" " text="Удалить номер" />
+              {!userLoading && currentUser && currentUser.isAdmin && (
+                <Button
+                  type="button"
+                  className=" mx-4"
+                  text="Редактировать"
+                  onClick={handleEdit}
+                />
+              )}
+              {!userLoading && currentUser && currentUser.isAdmin && (
+                <Button type="button" text="Удалить номер" />
+              )}
             </div>
           </div>
         </div>

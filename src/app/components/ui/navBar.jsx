@@ -5,15 +5,17 @@ import {useAuth} from '../../hooks/useAuth'
 import NavProfile from './navProfile'
 
 const NavBar = () => {
-  const {currentUser} = useAuth()
+  const {currentUser, isLoading} = useAuth()
   return (
     <>
       <nav className="navbar mt-4 px-5 ">
         <div className="container-fluid px-5">
           <div className="header-logo">
-            <span className="logo" style={{color: '#192252'}}>
-              Cootels
-            </span>
+            <a className="navbar-brand" href="/">
+              <span className="logo" style={{color: '#192252'}}>
+                Cootels
+              </span>
+            </a>
           </div>
           <ul className="nav">
             <li className="nav-item">
@@ -27,7 +29,7 @@ const NavBar = () => {
               </Link>
             </li>
 
-            {currentUser && (
+            {!isLoading && currentUser && currentUser.isAdmin && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin">
                   Администратор

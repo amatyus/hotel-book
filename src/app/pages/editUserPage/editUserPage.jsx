@@ -1,29 +1,39 @@
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import TextField from '../../components/common/form/textField'
-import SelectField from '../../components/common/form/selectField'
 import {useAuth} from '../../hooks/useAuth'
 import BackButton from '../../components/common/backButton'
 import {validator} from '../../utils/validateRules'
+import Loader from '../../components/common/form/loader'
+import Button from '../../components/common/button'
 
 const EditUserPage = () => {
   const history = useHistory()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState()
-  const {currentUser, updateUserData} = useAuth()
+  const {currentUser, updateUserData, isLoading: userLoading} = useAuth()
   const [errors, setErrors] = useState({})
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
+    await updateUserData({
+      ...data
+    })
 
-    history.push(`/users/${currentUser._id}`)
+    history.push(`/user/${currentUser.id}`)
   }
 
   useEffect(() => {
+    if (!userLoading && currentUser && !data) {
+      setData(currentUser)
+    }
+  }, [currentUser, data, userLoading])
+
+  useEffect(() => {
     if (data && isLoading) {
-      setIsLoading(false)
+      setLoading(false)
     }
   }, [data])
 
@@ -45,6 +55,7 @@ const EditUserPage = () => {
   useEffect(() => {
     validate()
   }, [data])
+
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
@@ -60,32 +71,35 @@ const EditUserPage = () => {
   return (
     <div className="container mt-5">
       <BackButton />
-      <div className="row">
-        <div className="col-md-6 offset-md-3 shadow p-4">
-          <form onSubmit={handleSubmit}>
-            <TextField
-              label="Имя"
-              name="name"
-              //   value={data.name}
-              onChange={handleChange}
-              error={errors.name}
-            />
-            <TextField
-              label="Электронная почта"
-              name="email"
-              //   value={data.email}
-              onChange={handleChange}
-              error={errors.email}
-            />
+      <div className="row g-flex justify-content-center">
+        <div className="col-md-4 shadow p-4">
+          {!isLoading ? (
+            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Имя"
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                error={errors.name}
+              />
+              <TextField
+                label="Электронная почта"
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                error={errors.email}
+              />
 
-            <button
-              type="submit"
-              disabled={!isValid}
-              className="btn btn-primary w-100 mx-auto"
-            >
-              Обновить
-            </button>
-          </form>
+              <Button
+                text="Обновить"
+                type="submit"
+                className={'w-50 mx-auto d-block'}
+                disabled={!isValid}
+              />
+            </form>
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </div>

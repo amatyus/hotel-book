@@ -28,7 +28,7 @@ function App() {
                 <Route path="/admin" component={AdminPage} />
                 <Route path="/logout" component={LogOut} />
 
-                <ProtectedRoute path="/user" component={User} />
+                <ProtectedRoute path="/user/:userId?/:edit?" component={User} />
 
                 <Redirect to="/" />
               </Switch>

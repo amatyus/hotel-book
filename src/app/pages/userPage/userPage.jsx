@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useUser} from '../../hooks/useUser'
 import UserCard from '../../components/ui/userCard'
+import Loader from '../../components/common/form/loader'
 
 const UserPage = ({userId}) => {
   const {getUserById} = useUser()
@@ -26,7 +27,7 @@ const UserPage = ({userId}) => {
       </>
     )
   } else {
-    return <h1>Loading </h1>
+    return <Loader />
   }
 }
 

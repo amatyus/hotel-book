@@ -8,7 +8,6 @@ const BackButton = () => {
       style={{background: '#0E1734'}}
       onClick={() => history.goBack()}
     >
-      <i className="bi bi-caret-left"></i>
       Назад
     </button>
   )

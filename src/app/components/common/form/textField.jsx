@@ -11,13 +11,16 @@ const TextField = ({
   placeholder,
   onBlur
 }) => {
-  const [showPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = ({target}) => {
     onChange({name: target.name, value: target.value})
   }
   const getInputClasses = () => {
     return 'form-control' + (error && booleanValue ? ' is-invalid' : '')
+  }
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState)
   }
   const booleanValue = Boolean(value)
   return (
@@ -33,7 +36,15 @@ const TextField = ({
           className={getInputClasses()}
           placeholder={placeholder}
         />
-
+        {type === 'password' && (
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={toggleShowPassword}
+          >
+            <i className={'bi bi-eye' + (showPassword ? '-slash' : '')}></i>
+          </button>
+        )}
         {error && booleanValue && (
           <div className="invalid-feedback">{error}</div>
         )}
