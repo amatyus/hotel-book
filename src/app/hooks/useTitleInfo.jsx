@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import imageService from '../services/image.service'
 
-const ImageContext = React.createContext()
+const titleInfoContext = React.createContext()
 
-export const useImage = () => {
-  return useContext(ImageContext)
+export const useTitleInfo = () => {
+  return useContext(titleInfoContext)
 }
 
-export const ImageProvider = ({children}) => {
+export const TitleInfoProvider = ({children}) => {
   const [isLoading, setLoading] = useState(true)
   const [images, setImage] = useState([])
   const [error, setError] = useState(null)
@@ -48,13 +48,15 @@ export const ImageProvider = ({children}) => {
   }
 
   return (
-    <ImageContext.Provider value={{isLoading, images, getImageList, getImage}}>
+    <titleInfoContext.Provider
+      value={{isLoading, images, getImageList, getImage}}
+    >
       {children}
-    </ImageContext.Provider>
+    </titleInfoContext.Provider>
   )
 }
 
-ImageProvider.propTypes = {
+TitleInfoProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node

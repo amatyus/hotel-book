@@ -9,7 +9,7 @@ import AdminPage from './layouts/admin'
 import {RoomsProvider} from './hooks/useRooms'
 import {CategoryProvider} from './hooks/useCategory'
 import AuthProvider from './hooks/useAuth'
-import {ImageProvider} from './hooks/useImage'
+import {TitleInfoProvider} from './hooks/useTitleInfo'
 import LogOut from './layouts/logOut'
 import ProtectedRoute from './components/common/protectedRoute'
 
@@ -20,7 +20,7 @@ function App() {
         <NavBar />
         <RoomsProvider>
           <CategoryProvider>
-            <ImageProvider>
+            <TitleInfoProvider>
               <Switch>
                 <Route path="/" exact component={Main} />
                 <Route path="/login/:type?" component={Login} />
@@ -32,7 +32,7 @@ function App() {
 
                 <Redirect to="/" />
               </Switch>
-            </ImageProvider>
+            </TitleInfoProvider>
           </CategoryProvider>
         </RoomsProvider>
       </AuthProvider>

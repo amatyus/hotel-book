@@ -63,14 +63,37 @@ export const RoomsProvider = ({children}) => {
     }
   }
   async function createRoom(data) {
-    try {
-      const {content} = roomService.create(data)
-      setRooms(content)
-    } catch (error) {
-      errorCatcher(error)
+    const room = {
+      ...data,
+      //   _id: nanoid(),
+      //   pageId: userId,
+      created_at: Date.now()
+      //   userId: currentUser._id
     }
+    // try {
+    //   const {content} = roomService.create(data)
+    //   setRooms(content)
+    // } catch (error) {
+    //   errorCatcher(error)
+    // }
   }
 
+  //   async function createComment(data) {
+  // const comment = {
+  // ...data,
+  // _id: nanoid(),
+  // pageId: userId,
+  // created_at: Date.now(),
+  // userId: currentUser._id
+  // };
+  // try {
+  // const { content } = await commentService.createComment(comment);
+  // setComments((prevState) => [...prevState, content]);
+  // } catch (error) {
+  // errorCatcher(error);
+  // }
+  // console.log(comment);
+  // }
   useEffect(() => {
     if (error !== null) {
       setError(null)

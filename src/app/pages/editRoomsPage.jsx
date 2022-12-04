@@ -41,17 +41,18 @@ const EditRoomsPage = ({roomId}) => {
   const validatorConfig = {
     title: {
       isRequired: {
-        message: 'Title обязателен для заполнения '
+        message: 'Title обязателен для заполнения'
       }
     },
     description: {
       isRequired: {
-        message: 'Description обязателен для заполнения '
+        message: 'Description обязателен для заполнения'
       }
     },
     price: {
-      isRequired: {
-        message: 'Pricе обязателен для заполнения '
+      min: {
+        message: 'Pricе обязателен для заполнения',
+        value: 2
       }
     },
     category: {
@@ -97,7 +98,7 @@ const EditRoomsPage = ({roomId}) => {
         <BackButton />
         <h3 className="edit-title mt-5">Редактировать данные о номере:</h3>
         <div className="form-body w-50">
-          {!isLoading ? (
+          {!isLoading && Object.keys(category).length > 0 ? (
             <form onSubmit={handeleSubmit}>
               <TextField
                 label="Title"
@@ -132,7 +133,11 @@ const EditRoomsPage = ({roomId}) => {
                 onChange={handleChange}
                 value={data.category}
               />
-              <Button type="submit" text="Сохранить изменения"></Button>
+              <Button
+                type="submit"
+                text="Сохранить изменения"
+                disabled={!isValid}
+              ></Button>
             </form>
           ) : (
             <Loader />

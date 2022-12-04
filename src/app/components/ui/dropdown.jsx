@@ -58,6 +58,28 @@ const Dropdown = ({adult, childrens, handleInc, handleDec}) => {
               text="+"
             />
           </li>
+          <li>
+            <span className="optionText">Дети</span>
+            <DropdownField
+              onChange={handleDec}
+              className="optionCounterButton"
+              value={childrens}
+              amount={childrens <= 0}
+              name="children"
+              type="button"
+              text="-"
+            />
+
+            <span className="optionCounterNumber">{childrens}</span>
+            <DropdownField
+              onChange={handleInc}
+              className="optionCounterButton"
+              value={childrens}
+              name="children"
+              type="button"
+              text="+"
+            />
+          </li>
         </ul>
       </div>
     </>

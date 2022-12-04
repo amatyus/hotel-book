@@ -11,12 +11,7 @@ import {validator} from '../utils/validateRules'
 import {useRooms} from '../hooks/useRooms'
 
 const AddRoomsPage = ({onSubmit}) => {
-  const [data, setData] = useState({
-    title: '',
-    description: '',
-    price: '',
-    category: ''
-  })
+  const [data, setData] = useState({})
   const {category} = useCategory()
   const [errors, setErrors] = useState({})
   const {createRoom} = useRooms()
@@ -59,6 +54,7 @@ const AddRoomsPage = ({onSubmit}) => {
   useEffect(() => {
     validate()
   }, [data])
+
   const validate = () => {
     const errors = validator(data, validatorConfig)
     setErrors(errors)
@@ -66,19 +62,25 @@ const AddRoomsPage = ({onSubmit}) => {
   }
   const isValid = Object.keys(errors).length === 0
 
+  const clearForm = () => {
+    setData({})
+    setErrors({})
+  }
+
   const handeleSubmit = async (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    // onSubmit(data)
+    onSubmit(data)
     console.log(data)
-    try {
-      await createRoom(data)
-      //   history.push('/')
-    } catch (error) {
-      setErrors(error)
-      console.log(error)
-    }
+    clearForm()
+    // try {
+    //   await createRoom(data)
+    //   //   history.push('/')
+    // } catch (error) {
+    //   setErrors(error)
+    //   console.log(error)
+    // }
   }
 
   return (
@@ -92,7 +94,7 @@ const AddRoomsPage = ({onSubmit}) => {
               label="Title"
               name="title"
               onChange={handleChange}
-              value={data.title}
+              value={data.title || ''}
               error={errors.title}
               placeholder="Title Room"
             />
@@ -100,7 +102,7 @@ const AddRoomsPage = ({onSubmit}) => {
               label="Description"
               name="description"
               onChange={handleChange}
-              value={data.description}
+              value={data.description || ''}
               error={errors.description}
               placeholder="Description Room"
             />
@@ -108,7 +110,7 @@ const AddRoomsPage = ({onSubmit}) => {
               label="Price"
               name="price"
               onChange={handleChange}
-              value={data.price}
+              value={data.price || ''}
               error={errors.price}
               placeholder="Price Room"
             />
@@ -125,7 +127,7 @@ const AddRoomsPage = ({onSubmit}) => {
               defaultOption="Выберите категорию..."
               options={categoryList}
               onChange={handleChange}
-              value={data.category}
+              value={data.category || ''}
               error={errors.category}
               placeholder="Category Room"
             />

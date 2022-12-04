@@ -2,10 +2,10 @@ import React from 'react'
 
 import RoomsCard from './ui/roomsCard'
 import Loader from './common/form/loader'
-import {useImage} from '../hooks/useImage'
+import {useTitleInfo} from '../hooks/useTitleInfo'
 
 const Reservation = () => {
-  const {images} = useImage()
+  const {images} = useTitleInfo()
 
   if (images.length) {
     return (

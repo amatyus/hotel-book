@@ -7,22 +7,22 @@ import Button from '../common/button'
 
 const DataForm = () => {
   const [formData, setFormData] = useState({
-    start: new Date(),
-    end: new Date(),
+    start: Date.now(),
+    end: Date.now(),
     adult: 2,
     children: 0
   })
 
-  const {start, end, adult, children} = formData
+  const transformDate = (data) => {
+    if (start && end) {
+      return data.getTime()
+    }
+  }
 
-  //   const transformDate = (data) => {
-  //     return data.getTime()
-  //   }
+  const {start, end, adult, children} = formData
 
   const handleDateChange = (dates) => {
     const [start, end] = dates
-    console.log(formData)
-
     setFormData((prev) => ({...prev, start, end}))
   }
 
@@ -46,7 +46,10 @@ const DataForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log(formData)
+    const startData = transformDate(start)
+    const endData = transformDate(end)
+    const people = adult + children
+    console.log(startData, endData, people)
   }
   return (
     <>
@@ -62,9 +65,8 @@ const DataForm = () => {
             startDate={start}
             endDate={end}
             onChange={handleDateChange}
-            minDate={new Date()}
-            // placeholderText="Заезд - Отъезд"
-            placeholderText={`${start}  - ${end} `}
+            minDate={Date.now()}
+            placeholderText={`${start} - ${end} `}
             className="date-picker-input "
           />
         </div>

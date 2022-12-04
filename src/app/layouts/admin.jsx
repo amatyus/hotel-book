@@ -3,11 +3,10 @@ import AddRoomsPage from '../pages/addRoomPage'
 import {useRooms} from '../hooks/useRooms'
 
 const Admin = () => {
-  const {addRoom} = useRooms()
+  const {createRoom} = useRooms()
 
   const handeleSubmit = (data) => {
-    addRoom(data)
-    console.log(data)
+    createRoom(data)
   }
   return (
     <>
