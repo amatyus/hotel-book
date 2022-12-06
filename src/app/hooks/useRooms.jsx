@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import roomService from '../services/room.service'
 import Loader from '../components/common/form/loader'
+import {nanoid} from 'nanoid'
 
 const RoomsContext = React.createContext()
 
@@ -26,7 +27,6 @@ export const RoomsProvider = ({children}) => {
     }
     getRooms()
   }, [])
-
   function errorCatcher(error) {
     const {message} = error.response.data
     setError(message)
@@ -53,47 +53,34 @@ export const RoomsProvider = ({children}) => {
     }
   }
 
-  const addRoom = async (data) => {
-    try {
-      const {content} = await roomService.create(data)
-      setRooms((prevState) => [...prevState, content])
-      return content
-    } catch (error) {
-      setError(error)
-    }
-  }
   async function createRoom(data) {
     const room = {
       ...data,
-      //   _id: nanoid(),
+      id: nanoid(),
+      image: ['house.jpg']
       //   pageId: userId,
-      created_at: Date.now()
+      //   created_at: Date.now()
       //   userId: currentUser._id
     }
-    // try {
-    //   const {content} = roomService.create(data)
-    //   setRooms(content)
-    // } catch (error) {
-    //   errorCatcher(error)
-    // }
+    try {
+      const {content} = await roomService.create(room)
+      setRooms((prevState) => [...prevState, content])
+    } catch (error) {
+      errorCatcher(error)
+    }
   }
 
-  //   async function createComment(data) {
-  // const comment = {
-  // ...data,
-  // _id: nanoid(),
-  // pageId: userId,
-  // created_at: Date.now(),
-  // userId: currentUser._id
-  // };
-  // try {
-  // const { content } = await commentService.createComment(comment);
-  // setComments((prevState) => [...prevState, content]);
-  // } catch (error) {
-  // errorCatcher(error);
-  // }
-  // console.log(comment);
-  // }
+  async function removeRoom(id) {
+    try {
+      const {content} = await roomService.remove(id)
+      if (content === null) {
+        setRooms((prevState) => prevState.filter((r) => r.id !== id))
+      }
+    } catch (error) {
+      errorCatcher(error)
+    }
+  }
+
   useEffect(() => {
     if (error !== null) {
       setError(null)
@@ -106,7 +93,7 @@ export const RoomsProvider = ({children}) => {
         rooms,
         getRoom,
         updateRoomData,
-        addRoom,
+        removeRoom,
         createRoom,
         isLoading
       }}

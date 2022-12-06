@@ -8,6 +8,7 @@ const Admin = () => {
   const handeleSubmit = (data) => {
     createRoom(data)
   }
+
   return (
     <>
       <AddRoomsPage onSubmit={handeleSubmit} />

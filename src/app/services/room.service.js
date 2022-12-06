@@ -3,7 +3,7 @@ const roomEndPoint = 'rooms/'
 
 const roomService = {
   update: async (id, content) => {
-    const {data} = await httpService.put(roomEndPoint + id, content)
+    const {data} = await httpService.patch(roomEndPoint + id, content)
     return data
   },
   get: async (id) => {
@@ -15,7 +15,11 @@ const roomService = {
     return data
   },
   create: async (payload) => {
-    const {data} = await httpService.put(roomService + payload.id, payload)
+    const {data} = await httpService.put(roomEndPoint + payload.id, payload)
+    return data
+  },
+  remove: async (roomId) => {
+    const {data} = await httpService.delete(roomEndPoint + roomId)
     return data
   }
 }

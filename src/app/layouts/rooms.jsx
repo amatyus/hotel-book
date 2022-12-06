@@ -1,5 +1,4 @@
 import React from 'react'
-import RoomsListPage from '../pages/roomsListPage'
 import {useParams} from 'react-router-dom'
 import RoomPage from '../components/roomPage'
 import EditRoomsPage from '../pages/editRoomsPage'
@@ -10,15 +9,7 @@ const Rooms = () => {
 
   return (
     <>
-      {roomId ? (
-        edit ? (
-          <EditRoomsPage roomId={roomId} />
-        ) : (
-          <RoomPage roomId={roomId} />
-        )
-      ) : (
-        <RoomsListPage />
-      )}
+      {edit ? <EditRoomsPage roomId={roomId} /> : <RoomPage roomId={roomId} />}
     </>
   )
 }

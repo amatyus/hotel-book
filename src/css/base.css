@@ -22,7 +22,7 @@ a:link:active,
 a:visited:active {
   text-decoration: none;
   /* color: #ffff; */
-  border: none;
+  /* border: none; */
 }
 
 ul {

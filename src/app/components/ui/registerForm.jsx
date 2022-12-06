@@ -55,6 +55,7 @@ const RegisterForm = () => {
   useEffect(() => {
     validate()
   }, [data])
+
   const validate = () => {
     const errors = validator(data, validatorConfig)
     setErrors(errors)
@@ -66,7 +67,6 @@ const RegisterForm = () => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    console.log(data)
     try {
       await signUp(data)
       history.push('/')

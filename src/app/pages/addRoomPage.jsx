@@ -8,13 +8,14 @@ import '../../css/editRoomsPage.css'
 import BackButton from '../components/common/backButton'
 import {useCategory} from '../hooks/useCategory'
 import {validator} from '../utils/validateRules'
-import {useRooms} from '../hooks/useRooms'
+import FileField from '../components/common/form/fileField'
+import {useHistory} from 'react-router-dom'
 
 const AddRoomsPage = ({onSubmit}) => {
   const [data, setData] = useState({})
   const {category} = useCategory()
   const [errors, setErrors] = useState({})
-  const {createRoom} = useRooms()
+  const history = useHistory()
 
   const categoryList = category.map((с) => ({
     label: с.name,
@@ -40,14 +41,17 @@ const AddRoomsPage = ({onSubmit}) => {
       }
     },
     price: {
-      isRequired: {
-        message: 'Укажите стоимость номера'
-      }
+      message: 'Минимальная цена не должна быть меньше одного символа',
+      value: 1
     },
     category: {
       isRequired: {
         message: 'Выберите категорию номера'
       }
+    },
+    maxPeople: {
+      message: 'Минимальное количество людей не должно быть меньше 1',
+      value: 1
     }
   }
 
@@ -72,15 +76,8 @@ const AddRoomsPage = ({onSubmit}) => {
     const isValid = validate()
     if (!isValid) return
     onSubmit(data)
-    console.log(data)
     clearForm()
-    // try {
-    //   await createRoom(data)
-    //   //   history.push('/')
-    // } catch (error) {
-    //   setErrors(error)
-    //   console.log(error)
-    // }
+    history.push(`/rooms`)
   }
 
   return (
@@ -114,12 +111,20 @@ const AddRoomsPage = ({onSubmit}) => {
               error={errors.price}
               placeholder="Price Room"
             />
+            <TextField
+              label="Max People"
+              name="maxPeople"
+              onChange={handleChange}
+              value={data.maxPeople || ''}
+              error={errors.maxPeople}
+              placeholder="Max People"
+            />
             {/* <FileField
               label="Image"
               name="image"
               onChange={handleChange}
               error={errors.image}
-              //   value={form.image}
+              value={data.image}
             /> */}
             <SelectField
               label="Category"
@@ -131,7 +136,7 @@ const AddRoomsPage = ({onSubmit}) => {
               error={errors.category}
               placeholder="Category Room"
             />
-            <Button type="submit" text="Добавить" disabled={!isValid}></Button>
+            <Button type="submit" text="Добавить" disabled={!isValid} />
           </form>
         </div>
       </div>

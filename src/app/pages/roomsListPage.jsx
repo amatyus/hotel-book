@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom'
 import {paginate} from '../utils/paginate'
 import Pagination from '../components/pagination'
 import RoomsPage from './roomsPage'
@@ -8,15 +9,22 @@ import GroupList from '../components/ui/groupList'
 import {useCategory} from '../hooks/useCategory'
 import Button from '../components/common/button'
 import _ from 'lodash'
+import DataForm from '../components/ui/dataForm'
 
 const RoomsListPage = () => {
   const {rooms} = useRooms()
+  const {start: startQuery, end: endQuery, count: countQuery} = useParams()
   const {category} = useCategory()
   const [selectedCategory, setSelectedCategory] = useState()
   const [sortBy, setSortBy] = useState({path: 'rating', order: 'desc'})
-  console.log(sortBy)
+  //   console.log(sortBy)
 
   const pageSize = 6
+
+  useEffect(() => {
+    // request to back
+    // console.log(startQuery, endQuery, countQuery)
+  }, [startQuery, endQuery, countQuery])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -42,57 +50,59 @@ const RoomsListPage = () => {
   const pageRooms = paginate(sortedRooms, currentPage, pageSize)
 
   const handleSort = (item) => {
-    if (sortBy.path === item) {
-      setSortBy((prevState) => ({
-        ...prevState,
-        order: prevState.order === 'asc' ? 'desc' : 'asc'
-      }))
-    } else {
-      setSortBy({path: item, order: 'asc'})
-    }
+    setSortBy((prevState) => ({
+      ...prevState,
+      order: prevState.order === 'asc' ? 'desc' : 'asc'
+    }))
   }
 
   const clearFilter = () => {
     setSelectedCategory()
   }
   const rendeSortArrow = (sortBy, currentPath) => {
-    if (sortBy.path === currentPath) {
-      if (sortBy.order === 'asc') {
-        return <i className="bi bi-caret-down-fill"></i>
-      } else {
-        return <i className="bi bi-caret-up-fill"></i>
-      }
+    if (sortBy.order === 'asc') {
+      return <i className="bi bi-caret-down-fill"></i>
+    } else {
+      return <i className="bi bi-caret-up-fill"></i>
     }
-    return null
   }
 
   if (pageRooms.length) {
     return (
       <>
-        {category && (
-          <>
-            <div className="d-inline-flex flex-column  mt-5 mx-5 px-5">
-              <GroupList
-                onItemSelect={handleProfessionSelect}
-                selectedItem={selectedCategory}
-              />
+        <div className="row align-items-center mx-5 px-5 mt-5">
+          <div className="col-2">
+            {category && (
+              <>
+                <div className="d-inline-flex flex-column ">
+                  <GroupList
+                    onItemSelect={handleProfessionSelect}
+                    selectedItem={selectedCategory}
+                  />
 
-              <Button
-                text="Очистить"
-                type="button"
-                onClick={clearFilter}
-                className={'mt-1'}
-              />
-            </div>
-          </>
-        )}
-        <h5
-          className="d-inline card-rating m-1"
-          onClick={() => handleSort('rate')}
-        >
-          Rate
-        </h5>
-        {rendeSortArrow(sortBy, 'rate')}
+                  <Button
+                    text="Очистить"
+                    type="button"
+                    onClick={clearFilter}
+                    className={'mt-1'}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+          <div className="col-1">
+            <h5
+              className="d-inline card-rating m-1"
+              onClick={() => handleSort('rate')}
+            >
+              Rate
+            </h5>
+            {rendeSortArrow(sortBy, 'rate')}
+          </div>
+          <div className="col-6 px-4">
+            <DataForm />
+          </div>
+        </div>
 
         <div className="row row-cols-1 row-cols-md-2 mx-5 px-5 my-4  ">
           {pageRooms &&

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import '../../../css/navBar.css'
 import {useAuth} from '../../hooks/useAuth'
 import NavProfile from './navProfile'
@@ -19,21 +19,21 @@ const NavBar = () => {
           </div>
           <ul className="nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link px-0 mx-3" to="/" exact>
                 Главная
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link className="nav-link" to="/rooms">
+              <NavLink className="nav-link  px-0 mx-3" to="/rooms">
                 Номера
-              </Link>
+              </NavLink>
             </li>
 
             {!isLoading && currentUser && currentUser.isAdmin && (
               <li className="nav-item">
-                <Link className="nav-link" to="/admin">
+                <NavLink className="nav-link  px-0 mx-3" to="/admin">
                   Администратор
-                </Link>
+                </NavLink>
               </li>
             )}
           </ul>

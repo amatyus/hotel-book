@@ -4,8 +4,11 @@ import 'react-datepicker/dist/react-datepicker.css'
 import '../../../css/dataForm.css'
 import Dropdown from './dropdown'
 import Button from '../common/button'
+import {useHistory} from 'react-router-dom'
 
 const DataForm = () => {
+  const history = useHistory()
+
   const [formData, setFormData] = useState({
     start: Date.now(),
     end: Date.now(),
@@ -15,7 +18,7 @@ const DataForm = () => {
 
   const transformDate = (data) => {
     if (start && end) {
-      return data.getTime()
+      return Date.parse(data)
     }
   }
 
@@ -42,6 +45,16 @@ const DataForm = () => {
     }))
   }
 
+  const filterByDate = (arr, {start, end}) => {
+    start = start ? new Date(start) : null
+    end = end ? new Date(end) : null
+
+    return arr.filter(({date}) => {
+      date = new Date(date)
+      return !((start && start > date) || (end && end < date))
+    })
+  }
+
   // обработка события отправки формы
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -49,8 +62,14 @@ const DataForm = () => {
     const startData = transformDate(start)
     const endData = transformDate(end)
     const people = adult + children
+    // for (let i = startData; i <= endData; i = i + 24 * 60 * 60 * 1000) {
+    //   console.log(new Date(i).toISOString().substring(0, 10))
+    // }
     console.log(startData, endData, people)
+
+    history.push(`/rooms?start=${startData}&end=${endData}&count=${people}`)
   }
+
   return (
     <>
       <form

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Loader from './common/form/loader'
 import {useHistory} from 'react-router-dom'
@@ -19,6 +19,10 @@ const RoomPage = ({roomId}) => {
   const category = getCategory(room.category)
   const {currentUser, isLoading: userLoading} = useAuth()
 
+  //   const handleRemoveComment = (id) => {
+  //     removeRoom(id)
+  //     console.log(id)
+  //   }
   const responsive = {
     desktop: {
       breakpoint: {max: 3000, min: 1024},
@@ -33,7 +37,7 @@ const RoomPage = ({roomId}) => {
     history.push(`/rooms/${roomId}/edit`)
   }
 
-  if (room && !categoryLoading) {
+  if (room && !categoryLoading && room.image) {
     return (
       <>
         <div className="row p-5">
@@ -44,11 +48,12 @@ const RoomPage = ({roomId}) => {
           <div className="card p-5 ">
             <Carousel responsive={responsive}>
               {room &&
+                room.image &&
                 room.image.map((img) => (
                   <div key={room}>
                     <img
                       key={room.id}
-                      src={require(`../../img/singleRoom/${img}`)}
+                      src={require(`../../img/${img}`)}
                       alt="..."
                       className="w-50"
                     />
@@ -71,9 +76,13 @@ const RoomPage = ({roomId}) => {
                   onClick={handleEdit}
                 />
               )}
-              {!userLoading && currentUser && currentUser.isAdmin && (
-                <Button type="button" text="Удалить номер" />
-              )}
+              {/* {!userLoading && currentUser && currentUser.isAdmin && (
+                <Button
+                  type="button"
+                  text="Удалить номер"
+                  onClick={() => handleRemoveComment(roomId)}
+                />
+              )} */}
             </div>
           </div>
         </div>

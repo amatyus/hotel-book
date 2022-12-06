@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import '../../../css/room-card.css'
-import '../../../img/singleRoom/single-1_1.jpg'
 
 const RoomsCard = (props) => {
   const {id, name, title} = props

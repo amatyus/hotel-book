@@ -11,6 +11,8 @@ import {validator} from '../utils/validateRules'
 import {useRooms} from '../hooks/useRooms'
 import {useCategory} from '../hooks/useCategory'
 import Loader from '../components/common/form/loader'
+import {useAuth} from '../hooks/useAuth'
+import {useHistory} from 'react-router-dom'
 
 const EditRoomsPage = ({roomId}) => {
   const [isLoading, setLoading] = useState(true)
@@ -18,6 +20,12 @@ const EditRoomsPage = ({roomId}) => {
   const {category} = useCategory()
   const currentRoom = getRoom(roomId)
   const [errors, setErrors] = useState({})
+  const {currentUser, isLoading: userLoading} = useAuth()
+  const history = useHistory()
+
+  if (!userLoading && !currentUser?.isAdmin) {
+    history.replace('/')
+  }
 
   console.log(currentRoom)
   const [data, setData] = useState()
@@ -31,10 +39,10 @@ const EditRoomsPage = ({roomId}) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    await updateRoomData({
+    await updateRoomData(data.id, {
       ...data
     })
-
+    history.goBack()
     // history.push(`/user/${currentUser.id}`)
   }
 

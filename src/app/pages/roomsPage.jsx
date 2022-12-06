@@ -3,9 +3,18 @@ import PropTypes from 'prop-types'
 import {useHistory} from 'react-router-dom'
 import Button from '../components/common/button'
 import '../../css/room-card.css'
+import {useAuth} from '../hooks/useAuth'
+import {useRooms} from '../hooks/useRooms'
 
 const RoomsPage = ({title, id, image, rating}) => {
   const history = useHistory()
+  const {removeRoom} = useRooms()
+
+  const {currentUser, isLoading: userLoading} = useAuth()
+
+  const handleRemoveComment = (id) => {
+    removeRoom(id)
+  }
 
   const handleOpen = () => {
     history.push(`/rooms/${id}`)
@@ -16,7 +25,7 @@ const RoomsPage = ({title, id, image, rating}) => {
         <div className="card ">
           {image && (
             <img
-              src={require(`../../img/singleRoom/${image[0]}`)}
+              src={require(`../../img/${image[0]}`)}
               className="card-img-top"
               alt="imageRoom"
             ></img>
@@ -29,6 +38,14 @@ const RoomsPage = ({title, id, image, rating}) => {
               <i className="bi bi-star-fill mx-1"></i>
             </h6>
             <Button type="button" text="Подробнее" onClick={handleOpen} />
+            {!userLoading && currentUser && currentUser.isAdmin && (
+              <Button
+                type="button"
+                text="Удалить номер"
+                className={'mx-3'}
+                onClick={() => handleRemoveComment(id)}
+              />
+            )}
           </div>
         </div>
       </div>

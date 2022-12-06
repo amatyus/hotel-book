@@ -11,19 +11,14 @@ const Footer = () => {
         </span>
 
         <ul className="nav justify-content-end">
+          {/* <li className="nav-item">
+            <Link className="nav-link link-footer" to="/">
+              Главная
+            </Link>
+          </li> */}
           <li className="nav-item">
             <Link className="nav-link link-footer" to="/rooms">
               Номера
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link link-footer" to="/services">
-              Услуги
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link link-footer" to="/contacts">
-              Контакты
             </Link>
           </li>
         </ul>

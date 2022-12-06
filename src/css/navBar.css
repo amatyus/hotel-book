@@ -41,3 +41,7 @@
 .nav-item {
   color: #192252;
 }
+
+.active {
+  border-bottom: solid;
+}
