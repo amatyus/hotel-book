@@ -4,7 +4,7 @@ import 'react-date-range/dist/styles.css' // main css file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import DataForm from '../components/ui/dataForm'
 import HomeCard from '../components/ui/homeCard'
-import Reservation from '../components/reservation'
+import TitleInfo from '../components/titleInfo'
 import Footer from '../components/footer'
 
 const Main = () => {
@@ -37,7 +37,7 @@ const Main = () => {
           </div>
         </div>
       </div>
-      <Reservation />
+      <TitleInfo />
       <Footer />
     </>
   )

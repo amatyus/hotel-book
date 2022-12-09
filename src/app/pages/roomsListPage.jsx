@@ -6,15 +6,16 @@ import RoomsPage from './roomsPage'
 import Loader from '../components/common/form/loader'
 import {useRooms} from '../hooks/useRooms'
 import GroupList from '../components/ui/groupList'
-import {useCategory} from '../hooks/useCategory'
 import Button from '../components/common/button'
 import _ from 'lodash'
 import DataForm from '../components/ui/dataForm'
+import {useSelector} from 'react-redux'
+import {getCategory} from '../store/category'
 
 const RoomsListPage = () => {
   const {rooms} = useRooms()
   const {start: startQuery, end: endQuery, count: countQuery} = useParams()
-  const {category} = useCategory()
+  const category = useSelector(getCategory())
   const [selectedCategory, setSelectedCategory] = useState()
   const [sortBy, setSortBy] = useState({path: 'rating', order: 'desc'})
   //   console.log(sortBy)
@@ -36,7 +37,7 @@ const RoomsListPage = () => {
     setCurrentPage(pageIndex)
   }
 
-  const handleProfessionSelect = (item) => {
+  const handleCategorySelect = (item) => {
     setSelectedCategory(item)
   }
   const filteredRooms = selectedCategory
@@ -76,7 +77,7 @@ const RoomsListPage = () => {
               <>
                 <div className="d-inline-flex flex-column ">
                   <GroupList
-                    onItemSelect={handleProfessionSelect}
+                    onItemSelect={handleCategorySelect}
                     selectedItem={selectedCategory}
                   />
 

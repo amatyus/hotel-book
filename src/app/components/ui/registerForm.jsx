@@ -2,17 +2,16 @@ import React, {useEffect, useState} from 'react'
 import {validator} from '../../utils/validateRules'
 import TextField from '../common/form/textField'
 import Button from '../common/button'
-import {useAuth} from '../../hooks/useAuth'
-import {useHistory} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {signUp} from '../../store/user'
 
 const RegisterForm = () => {
+  const dispatch = useDispatch()
   const [data, setData] = useState({
     name: '',
     email: '',
     password: ''
   })
-  const history = useHistory()
-  const {signUp} = useAuth()
   const [errors, setErrors] = useState({})
 
   const handleChange = (target) => {
@@ -63,17 +62,11 @@ const RegisterForm = () => {
   }
   const isValid = Object.keys(errors).length === 0
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    try {
-      await signUp(data)
-      history.push('/')
-    } catch (error) {
-      setErrors(error)
-      console.log(error)
-    }
+    dispatch(signUp(data))
   }
   return (
     <form onSubmit={handleSubmit}>

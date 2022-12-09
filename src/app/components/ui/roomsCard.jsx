@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../../../css/room-card.css'
+import '../../../css/roomCard.css'
 
 const RoomsCard = (props) => {
   const {id, name, title} = props

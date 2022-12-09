@@ -9,25 +9,26 @@ import BackButton from '../components/common/backButton'
 import FileField from '../components/common/form/fileField'
 import {validator} from '../utils/validateRules'
 import {useRooms} from '../hooks/useRooms'
-import {useCategory} from '../hooks/useCategory'
 import Loader from '../components/common/form/loader'
-import {useAuth} from '../hooks/useAuth'
 import {useHistory} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {getCategory, getCategoryLoadingStatus} from '../store/category'
+import {getCurrentUserData} from '../store/user'
 
 const EditRoomsPage = ({roomId}) => {
   const [isLoading, setLoading] = useState(true)
   const {getRoom, updateRoomData, isLoading: roomLoading} = useRooms()
-  const {category} = useCategory()
+  const category = useSelector(getCategory())
+  const categoryLoading = useSelector(getCategoryLoadingStatus())
   const currentRoom = getRoom(roomId)
   const [errors, setErrors] = useState({})
-  const {currentUser, isLoading: userLoading} = useAuth()
+  const currentUser = useSelector(getCurrentUserData())
   const history = useHistory()
 
-  if (!userLoading && !currentUser?.isAdmin) {
+  if (!currentUser?.isAdmin) {
     history.replace('/')
   }
 
-  console.log(currentRoom)
   const [data, setData] = useState()
 
   const categoryList = category.map((с) => ({
@@ -71,10 +72,10 @@ const EditRoomsPage = ({roomId}) => {
   }
 
   useEffect(() => {
-    if (!roomLoading && currentRoom && !data) {
+    if ((!roomLoading && !categoryLoading, currentRoom && !data)) {
       setData(currentRoom)
     }
-  }, [roomLoading, currentRoom, data])
+  }, [roomLoading, categoryLoading, currentRoom, data])
 
   useEffect(() => {
     if (data && isLoading) {

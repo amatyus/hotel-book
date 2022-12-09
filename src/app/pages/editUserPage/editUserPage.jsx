@@ -1,35 +1,33 @@
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import TextField from '../../components/common/form/textField'
-import {useAuth} from '../../hooks/useAuth'
 import BackButton from '../../components/common/backButton'
 import {validator} from '../../utils/validateRules'
 import Loader from '../../components/common/form/loader'
 import Button from '../../components/common/button'
+import {useDispatch, useSelector} from 'react-redux'
+import {updateUser, getCurrentUserData} from '../../store/user'
 
 const EditUserPage = () => {
   const history = useHistory()
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState()
-  const {currentUser, updateUserData, isLoading: userLoading} = useAuth()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(getCurrentUserData())
   const [errors, setErrors] = useState({})
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-    await updateUserData({
-      ...data
-    })
-
-    history.push(`/user/${currentUser.id}`)
+    dispatch(updateUser({...data}))
   }
 
   useEffect(() => {
-    if (!userLoading && currentUser && !data) {
+    if (currentUser && !data) {
       setData(currentUser)
     }
-  }, [currentUser, data, userLoading])
+  }, [currentUser, data])
 
   useEffect(() => {
     if (data && isLoading) {

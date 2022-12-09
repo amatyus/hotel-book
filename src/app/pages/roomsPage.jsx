@@ -2,15 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {useHistory} from 'react-router-dom'
 import Button from '../components/common/button'
-import '../../css/room-card.css'
-import {useAuth} from '../hooks/useAuth'
+import '../../css/roomCard.css'
 import {useRooms} from '../hooks/useRooms'
+import {useSelector} from 'react-redux'
+import {getCurrentUserData} from '../store/user'
 
 const RoomsPage = ({title, id, image, rating}) => {
   const history = useHistory()
   const {removeRoom} = useRooms()
 
-  const {currentUser, isLoading: userLoading} = useAuth()
+  const currentUser = useSelector(getCurrentUserData())
 
   const handleRemoveComment = (id) => {
     removeRoom(id)
@@ -38,7 +39,7 @@ const RoomsPage = ({title, id, image, rating}) => {
               <i className="bi bi-star-fill mx-1"></i>
             </h6>
             <Button type="button" text="Подробнее" onClick={handleOpen} />
-            {!userLoading && currentUser && currentUser.isAdmin && (
+            {currentUser && currentUser.isAdmin && (
               <Button
                 type="button"
                 text="Удалить номер"

@@ -8,21 +8,18 @@ import '../../css/roomPage.css'
 import 'react-multi-carousel/lib/styles.css'
 import BackButton from './common/backButton'
 import {useRooms} from '../hooks/useRooms'
-import {useCategory} from '../hooks/useCategory'
-import {useAuth} from '../hooks/useAuth'
+import {useSelector} from 'react-redux'
+import {getCategoryById, getCategoryLoadingStatus} from '../store/category'
+import {getCurrentUserData} from '../store/user'
 
 const RoomPage = ({roomId}) => {
   const {getRoom} = useRooms()
   const room = getRoom(roomId)
   const history = useHistory()
-  const {isLoading: categoryLoading, getCategory} = useCategory()
-  const category = getCategory(room.category)
-  const {currentUser, isLoading: userLoading} = useAuth()
+  const category = useSelector(getCategoryById(room.category))
+  const categoryLoading = useSelector(getCategoryLoadingStatus())
+  const currentUser = useSelector(getCurrentUserData())
 
-  //   const handleRemoveComment = (id) => {
-  //     removeRoom(id)
-  //     console.log(id)
-  //   }
   const responsive = {
     desktop: {
       breakpoint: {max: 3000, min: 1024},
@@ -68,7 +65,7 @@ const RoomPage = ({roomId}) => {
               <p className="card-text-category">Category: {category.name} </p>
               <p className="card-text-rating">Rating: {room.rating}</p>
               <Button type="button" text="Забронировать" />
-              {!userLoading && currentUser && currentUser.isAdmin && (
+              {currentUser && currentUser.isAdmin && (
                 <Button
                   type="button"
                   className=" mx-4"

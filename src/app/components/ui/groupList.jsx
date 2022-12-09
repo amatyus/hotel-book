@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {useCategory} from '../../hooks/useCategory'
+import {useSelector} from 'react-redux'
+import {getCategory} from '../../store/category'
 
 const GroupList = ({onItemSelect, selectedItem}) => {
-  const {category} = useCategory()
+  const category = useSelector(getCategory())
 
   return (
     <ul className="list-group list-group-flush">

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {useUser} from '../../hooks/useUser'
 import UserCard from '../../components/ui/userCard'
 import Loader from '../../components/common/form/loader'
+import {useSelector} from 'react-redux'
+import {getUserById} from '../../store/user'
 
 const UserPage = ({userId}) => {
-  const {getUserById} = useUser()
-  const user = getUserById(userId)
+  const user = useSelector(getUserById(userId))
 
   if (user) {
     return (

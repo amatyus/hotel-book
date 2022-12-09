@@ -6,14 +6,15 @@ import SelectField from '../components/common/form/selectField'
 import Button from '../components/common/button'
 import '../../css/editRoomsPage.css'
 import BackButton from '../components/common/backButton'
-import {useCategory} from '../hooks/useCategory'
 import {validator} from '../utils/validateRules'
 import FileField from '../components/common/form/fileField'
 import {useHistory} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {getCategory} from '../store/category'
 
 const AddRoomsPage = ({onSubmit}) => {
   const [data, setData] = useState({})
-  const {category} = useCategory()
+  const category = useSelector(getCategory())
   const [errors, setErrors] = useState({})
   const history = useHistory()
 

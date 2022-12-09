@@ -1,23 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link, useHistory} from 'react-router-dom'
-import {useAuth} from '../../hooks/useAuth'
+import {Link} from 'react-router-dom'
 import '../../../css/userCard.css'
+import {useSelector} from 'react-redux'
+import {getCurrentUserData, getCurrentUserId} from '../../store/user'
 
 const UserCard = ({user}) => {
-  const history = useHistory()
-  const {currentUser} = useAuth()
-
-  //   const handleClick = () => {
-  //     history.push(history.location.pathname + '/edit')
-  //   }
+  const currentUser = useSelector(getCurrentUserData())
+  const currentUserId = useSelector(getCurrentUserId())
 
   return (
     <div className="card mb-3">
       <div className="card-body user-card ">
-        {currentUser.id === user.id && (
+        {currentUser && currentUserId === user.id && (
           <Link
-            to={`/user/${currentUser.id}/edit`}
+            to={`/user/${currentUserId}/edit`}
             className="position-absolute top-0 end-0 btn btn-sm m-1"
           >
             <i className="bi bi-gear"></i>

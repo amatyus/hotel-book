@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {useCategory} from '../../hooks/useCategory'
 import Loader from '../common/form/loader'
+import {useSelector} from 'react-redux'
+import {
+  getCategory,
+  getCategoryLoadingStatus,
+  getCategoryById
+} from '../../store/category'
 
 const Category = ({id}) => {
-  const {isLoading, getCategory} = useCategory()
-  const category = getCategory(id)
+  const isLoading = useSelector(getCategoryLoadingStatus())
+  const category = useSelector(getCategoryById(id))
 
   if (!isLoading) {
     return <p>{category.name}</p>

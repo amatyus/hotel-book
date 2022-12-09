@@ -2,25 +2,25 @@ import React, {useState, useEffect} from 'react'
 import TextField from '../common/form/textField'
 import {validator} from '../../utils/validateRules'
 import Button from '../common/button'
-import {useAuth} from '../../hooks/useAuth'
 import {useHistory} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {login, getAuthErrors} from '../../store/user'
 
 const LoginForm = () => {
   const [data, setData] = useState({
     email: '',
     password: ''
   })
+  const loginError = useSelector(getAuthErrors())
   const [errors, setErrors] = useState({})
-  const [enterError, setEnterError] = useState(null)
   const history = useHistory()
-  const {logIn} = useAuth()
+  const dispatch = useDispatch()
 
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value
     }))
-    setEnterError(null)
   }
   const validatorConfig = {
     email: {
@@ -57,19 +57,14 @@ const LoginForm = () => {
   }
   const isValid = Object.keys(errors).length === 0
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
     if (!isValid) return
-
-    try {
-      await logIn(data)
-      history.push(
-        history.location.state ? history.location.state.from.pathname : '/'
-      )
-    } catch (error) {
-      setEnterError(error.message)
-    }
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : '/'
+    dispatch(login({payload: data, redirect}))
   }
 
   return (
@@ -89,9 +84,9 @@ const LoginForm = () => {
         error={errors.password}
         placeholder="Password"
       />
-      {enterError && <p className="text-danger">{enterError}</p>}
+      {loginError && <p className="text-danger">{loginError}</p>}
 
-      <Button text="Submit" type="submit" disabled={!isValid || enterError} />
+      <Button text="Submit" type="submit" disabled={!isValid} />
     </form>
   )
 }
