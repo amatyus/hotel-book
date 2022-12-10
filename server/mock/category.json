@@ -1,5 +1,5 @@
 [
-  {"id": "67rdca3eeb7f6fgeed471818", "name": "Single Room"},
-  {"id": "67rdca3eeb7f6fgeed471820", "name": "Double Room"},
-  {"id": "67rdca3eeb7f6fgeed471814", "name": "Cootage"}
+  {"_id": "67rdca3eeb7f6fgeed471818", "name": "Single Room"},
+  {"_id": "67rdca3eeb7f6fgeed471820", "name": "Double Room"},
+  {"_id": "67rdca3eeb7f6fgeed471814", "name": "Cootage"}
 ]

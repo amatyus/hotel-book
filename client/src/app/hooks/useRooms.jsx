@@ -60,7 +60,7 @@ export const RoomsProvider = ({children}) => {
       image: ['house.jpg']
       //   pageId: userId,
       //   created_at: Date.now()
-      //   userId: currentUser._id
+      //   userId: currentUser.id
     }
     try {
       const {content} = await roomService.create(room)
